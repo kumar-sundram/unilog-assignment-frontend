@@ -29,26 +29,14 @@ const Register = ({ history }) => {
   newpassword.current = watch("newpassword", "");
 
   const onSubmit = (data) => {
-    console.log({ data })
     setIsLoader(true)
     const formData = {
       email: data.email.trim(),
       name: data.name.trim(),
-      password: data.password
+      password: data.newpassword
     }
-    console.log({ formData })
-    return
     axios.post('/users/register', formData)
       .then((response) => {
-        // this.setState(() => ({
-        //   firstName: '',
-        //   middleName: '',
-        //   lastName: '',
-        //   password: '',
-        //   email: '',
-        //   mobile: '',
-        //   redirectList: true
-        // }))
         swal(`Successfully signed up`, "", "success", {
           className: "custom-save"
         });
@@ -112,15 +100,10 @@ const Register = ({ history }) => {
                 className={errors.newpassword ? "error-register" : ""}
                 ref={register({
                   required: "Required",
-                  pattern: {
-                    value: /^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[^a-zA-Z0-9])(?!.*\s).{8,15}$/,
-                    message:
-                      "Password should be 8 - 15 characters, should contain atleast one lower case letter, one upper case letter, one numeric digit and one special character"
-                  }
                 })}
               />
               {errors.newpassword && <MuiThemeProvider theme={theme}>
-                <Tooltip title={errors.newpassword.message} placement="top" arrow>
+                <Tooltip title={"Password should be 8 - 15 characters, should contain atleast one lower case letter, one upper case letter, one numeric digit and one special character"} placement="top" arrow>
                   <span
                     className="material-icons ml-10 red-text err-txt"
                     style={{ fontSize: "16px" }}

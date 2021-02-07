@@ -16,8 +16,8 @@ const App = () => {
       <BrowserRouter forceRefresh={true}>
         <Suspense fallback={<Loader />}>
           <Switch>
-            <Route path={routes.auth} component={AuthRoutes} />
             {!isEmpty(authToken) && <Route path="/" component={Navigation} />}
+            <Route path={routes.auth} component={AuthRoutes} />
             {isEmpty(authToken) && <Redirect to={routes.auth} />}
           </Switch>
         </Suspense>

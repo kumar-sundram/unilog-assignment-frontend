@@ -5,7 +5,6 @@ import routes from "../../routes";
 
 const Login = lazy(() => import("./Login"));
 const Register = lazy(() => import("./Register"));
-const Logout = lazy(() => import("./Logout"));
 
 const Routes = () => {
   const { path } = useRouteMatch();
@@ -14,7 +13,6 @@ const Routes = () => {
       <Switch>
         <Route path={routes.authRegister} component={Register} exact />
         <Route path={routes.authLogin} component={Login} exact />
-        <Route path={routes.authLogout} component={Logout} exact />
         <Route
           path={path}
           render={({ history }) => <Redirect to={routes.authLogin} />}

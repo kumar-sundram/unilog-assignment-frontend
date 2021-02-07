@@ -1,7 +1,6 @@
 import React from "react"
 import Routes from "../routes/Routes"
 import routes from '../routes'
-import { Link, withRouter } from "react-router-dom"
 
 const Nav = ({ history, match: { path } }) => {
   const userName = window.localStorage.getItem("NAME")
@@ -10,7 +9,7 @@ const Nav = ({ history, match: { path } }) => {
     <div className="container">
       <div className="user-container">
         <p className="name"><i className="fas fa-user-circle user-logo"></i> {userName}</p>
-        <Link className="logout-btn" to={routes.authLogout}><button className="btn logout-btn cursor-pointer" >Logout</button></Link>
+        <button className="btn logout-btn cursor-pointer" onClick={() => { window.localStorage.clear(); history.push(routes.authLogin) }} >Logout</button>
       </div>
       <section>
         <Routes history={history} path={path} />
@@ -19,4 +18,4 @@ const Nav = ({ history, match: { path } }) => {
   )
 }
 
-export default withRouter(Nav)
+export default Nav
