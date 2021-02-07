@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, lazy } from 'react';
+import './App.scss'
+import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom'
+import { isEmpty } from "./utils/Utils"
+import routes from './routes';
+import Loader from "./component/Loader"
 
-function App() {
+const AuthRoutes = lazy(() => import("./routes/auth/Routes"))
+const Navigation = lazy(() => import("./component/Nav"))
+
+const App = () => {
+  const authToken = window.localStorage.getItem("AUTH_TOKEN")
+ 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="page-container">
+      <BrowserRouter forceRefresh={true}>
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            <Route path={routes.auth} component={AuthRoutes} />
+            {!isEmpty(authToken) && <Route path="/" component={Navigation} />}
+            {isEmpty(authToken) && <Redirect to={routes.auth} />}
+          </Switch>
+        </Suspense>
+      </BrowserRouter >
     </div>
   );
 }
